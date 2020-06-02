@@ -18,7 +18,7 @@
 
         <input type="text" class="form-control" placeholder="Usuario" name="ingUsuario" required>
 
-        <span class="glyphicon-user form-control-feedback"></span>
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
       
     </div>
 
@@ -38,6 +38,13 @@
         </div>
         
       </div>
+
+      <?php
+         
+         $login = new ConntroladorUsuarios();
+         $login -> ctrIngresoUsuario();
+
+      ?>
 
     </form>
 
