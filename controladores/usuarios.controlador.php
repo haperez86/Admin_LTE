@@ -32,17 +32,41 @@ class ConntroladorUsuarios{
 
 					
 						$_SESSION["iniciarSesion"] = "ok";
-						$_SESSION["id"] = $respuesta["id"];
+						$_SESSION["id"] = 	
 						$_SESSION["nombre"] = $respuesta["nombre"];
 						$_SESSION["usuario"] = $respuesta["usuario"];
 						$_SESSION["foto"] = $respuesta["foto"];
 						$_SESSION["perfil"] = $respuesta["perfil"];
 
-						echo '<script>
-							
-							window.location = "inicio";
-							
+						/*=============================================
+						REGISTRAR FECHA PARA SABER EL ÚLTIMO LOGIN
+						=============================================*/
+
+						date_default_timezone_set('America/Bogota');
+
+						$fecha = date('Y-m-d');
+						$hora = date('H:i:s');
+
+						$fechaActual = $fecha.' '.$hora;
+
+						$item1 = "ultimo_login";
+						$valor1 = $fechaActual;
+
+						$item2 = "id";
+						$valor2 = $respuesta["id"];
+
+						$ultimoLogin = ModeloUsuarios::mdlActualizarUsuario($tabla, $item1, $valor1, $item2, $valor2);
+
+						if($ultimoLogin == "ok"){
+
+							echo '<script>
+
+								window.location = "inicio";
+
 							</script>';
+
+						}		
+
 					}else{
 						echo '<br><div class="alert alert-danger"> El usuario aún no está activado </div>';
 					}    
@@ -391,6 +415,52 @@ class ConntroladorUsuarios{
 
 			}
 		}
+	}
+
+	/*=============================================
+	BORRAR USUARIO
+	=============================================*/
+
+	static public function ctrBorrarUsuario(){
+
+		if(isset($_GET["idUsuario"])){
+
+			$tabla ="usuarios";
+			$datos = $_GET["idUsuario"];
+
+			if($_GET["fotoUsuario"] != ""){
+
+				unlink($_GET["fotoUsuario"]);
+				rmdir('vistas/img/usuarios/'.$_GET["usuario"]);
+
+			}
+
+			$respuesta = ModeloUsuarios::mdlBorrarUsuario($tabla, $datos);
+
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "El usuario ha sido borrado correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "usuarios";
+
+								}
+							})
+
+				</script>';
+
+			}		
+
+		}
+
 	}
 }
 

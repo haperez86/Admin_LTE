@@ -63,7 +63,7 @@
 
 
                   echo ' <tr>
-                  <td>'.$value["id"].'</td>
+                  <td>1</td>
                   <td>'.$value["nombre"].'</td>
                   <td>'.$value["usuario"].'</td>';
 
@@ -161,7 +161,7 @@
 
                   <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
-                  <input type="text" class="form-control input-lg" name="nuevoUsuario" placeholder="Ingresar usuario" required>
+                  <input type="text" class="form-control input-lg" name="nuevoUsuario" id="nuevoUsuario" placeholder="Ingresar usuario" required>
 
               </div>
 
@@ -384,7 +384,6 @@ MODAL EDITAR USUARIO
 
         ?>
 
-
       </form>
 
     </div>
@@ -392,5 +391,12 @@ MODAL EDITAR USUARIO
   </div>
 
 </div>
+
+<?php
+
+  $borrarUsuario = new ConntroladorUsuarios();
+  $borrarUsuario -> ctrBorrarUsuario();               
+
+?>
 
 
